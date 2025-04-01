@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="widget_mode" format="enum">
+        <enum name="inline" value="0"/>
+        <enum name="border" value="1"/>
+    </attr>
+    <attr name="pay_in"/>
+    <attr name="pay_value" format="float"/>
+    <attr name="currency" format="string"/>
+    <attr name="unequal" format="boolean"/>
+    <declare-styleable name="TamaraWidgetText">
+        <attr name="widget_mode"/>
+        <attr name="pay_value"/>
+        <attr name="pay_in"/>
+        <attr name="currency"/>
+        <attr name="unequal"/>
+    </declare-styleable>
+</resources>

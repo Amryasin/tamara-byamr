@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tamara_padding_general">16dp</dimen>
+    <dimen name="tamara_margin_general">16dp</dimen>
+    <dimen name="tamara_margin_general_large">12dp</dimen>
+    <dimen name="tamara_margin_general_medium">8dp</dimen>
+    <dimen name="tamara_margin_general_small">4dip</dimen>
+</resources>

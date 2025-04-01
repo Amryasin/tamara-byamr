@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/twContentTxt"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColorLink="@color/tw_color_highlight"
+    style="@style/BodyRegular2"
+    android:layout_marginHorizontal="@dimen/tamara_margin_general_small"
+    android:text="@string/tw_pay_in_x_with" />

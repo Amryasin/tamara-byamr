@@ -1,0 +1,31 @@
+name: tamara_flutter_sdk_plus
+description: Tamara Check out SDK
+version: 1.0.0
+homepage: https://pub.dev/packages/tamara_flutter_sdk_plus
+
+environment:
+  sdk: ^3.5.3
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  auto_size_text_field: ^2.2.1
+  fluttertoast: ^8.2.2
+  webview_flutter: ^4.2.3
+  webview_flutter_wkwebview: ^3.10.0
+  permission_handler: ^11.4.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: co.tamara.sdk
+        pluginClass: TamaraPlugin
+      ios:
+        pluginClass: TamaraPlugin

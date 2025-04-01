@@ -1,0 +1,81 @@
+group 'co.tamara.sdk'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.9.23'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 24
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+        implementation 'androidx.appcompat:appcompat:1.1.0'
+        implementation 'androidx.core:core-ktx:1.2.0'
+        implementation 'com.google.dagger:dagger-android-support:2.21'
+        implementation "com.google.dagger:dagger:2.24"
+        implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+        implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+        implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+        implementation "androidx.navigation:navigation-fragment-ktx:2.2.2"
+        implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+        implementation "com.squareup.okhttp3:logging-interceptor:4.0.1"
+        kapt 'com.google.dagger:dagger-compiler:2.21'
+        kapt 'com.google.dagger:dagger-android-processor:2.21'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+        implementation 'com.google.android.flexbox:flexbox:3.0.0'
+        implementation "androidx.constraintlayout:constraintlayout:2.1.3"
+    }
+}

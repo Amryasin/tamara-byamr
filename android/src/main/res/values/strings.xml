@@ -1,0 +1,23 @@
+<resources>ß
+    <string name="tw_pay_with_tamara_tamara">tamara</string>
+    <string name="tw_pay_with_tamara_content"><![CDATA[Pay later in 30 days, no fees. <font color="#6DC8BF">Learn more</font>]]></string>
+    <string name="tw_info_line_1">Receive the good before you pay for it</string>
+    <string name="tw_info_line_2">Pay within 30 days after shipping.</string>
+    <string name="tw_info_content_1_title">Select Tamara at checkout</string>
+    <string name="tw_info_content_1_subtitle">No prior signup needed.</string>
+    <string name="tw_info_content_2_title">Fill in your details</string>
+    <string name="tw_info_content_2_subtitle">Complete the ID verification if it’s your first purchase</string>
+    <string name="tw_info_content_3_title">Complete your first payment</string>
+    <string name="tw_info_content_3_subtitle">Split the rest over the next two months. No interest.</string>
+    <string name="tw_info_footer_subtitle">Visit Tamara.co for more details</string>
+    <string name="tw_info_footer_info">Terms and conditions apply, Tamara is Sharia-compliant</string>
+    <string name="tw_pay_in_x_with">"Split in %1$s payments of %2$s monthly without fees with "</string>
+    <string name="tw_learn_more">Learn more</string>
+    <string name="tw_amount_with_currency">%1$s %2$s</string>
+    <string name="tw_content_inline">Split in %1$s payments of currency item %2$s monthly without fees with tamara_logo %3$s</string>
+    <string name="tw_content_border">Split in %1$s payments of currency item %2$s monthly without fees. %3$s</string>
+    <string name="tw_content_inline_unequal">Split your payment in %1$s, interest-free payments with tamara_logo %2$s</string>
+    <string name="tw_content_border_unequal">Split your payment in %1$s, interest-free payments. %2$s</string>
+    <string name="tw_info_title">Split your payments with Tamara</string>
+    <string name="tw_info_sub_title">No interest, no fees!</string>
+</resources>

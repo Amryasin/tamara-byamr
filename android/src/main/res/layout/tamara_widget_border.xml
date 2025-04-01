@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="@dimen/tamara_padding_general"
+    android:background="@drawable/tw_bg_text_border">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/twContentTxt"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:layout_marginEnd="@dimen/tamara_margin_general"
+        style="@style/BodyRegular2"
+        android:textColorLink="@color/tw_color_highlight"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/tamara_margin_general" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/twLogoImg"
+        app:srcCompat="@drawable/tw_ic_logo_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

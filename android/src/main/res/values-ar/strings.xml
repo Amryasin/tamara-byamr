@@ -1,0 +1,24 @@
+<resources>
+    <string name="tw_pay_with_tamara_tamara">tamara</string>
+    <string name="tw_pay_with_tamara_content"><![CDATA[Pay later in 30 days, no fees. <font color="#6DC8BF">Learn more</font>]]></string>
+    <string name="tw_info_line_1">المنتج يجيك قبل ما تدفع له</string>
+    <string name="tw_info_line_2">.الدفع ٣٠ يوم من بعد الشحن</string>
+    <string name="tw_info_content_1_title">اختر تمارا للدفع</string>
+    <string name="tw_info_content_1_subtitle">ما يحتاج أي تسجيل مسبق.</string>
+    <string name="tw_info_content_2_title">أضف بياناتك</string>
+    <string name="tw_info_content_2_subtitle">أكمل التحقق من الهوية إذا كان هذا طلبك الأول مع تمارا</string>
+    <string name="tw_info_content_3_title">أكمل دفعتك الأولى</string>
+    <string name="tw_info_content_3_subtitle">سدد باقي المبلغ خلال شهرين ﺑﺪون ﻓﻮاﺋﺪ أو رﺳﻮم ﺧﻔﻴﺔ.</string>
+    <string name="tw_info_footer_subtitle"> للمزيد شيّك موقعنا الإلكتروني tamara.co</string>
+    <string name="tw_info_footer_info">تطبّق الشروط و الأحكام، تمارا موافقة للشريعة الإسلامية</string>
+    <string name="tw_pay_in_x_with">ادفع %2$s فقط على %1$s دفعات بدون فوائد مع</string>
+    <string name="tw_learn_more">اعرف أكثر</string>
+    <string name="tw_amount_with_currency">%1$s %2$s</string>
+    <string name="tw_content_inline">  ادفع %2$s فقط على %1$s دفعات بدون فوائد مع tamara_logo %3$s</string>
+    <string name="tw_content_border">  ادفع %2$s فقط على %1$s دفعات بدون فوائد مع %3$s</string>
+    <string name="tw_content_inline_unequal">قسمها على %1$s دفعات بدون فوائد مع tamara_logo %2$s</string>
+    <string name="tw_content_border_unequal">قسمها على %1$s دفعات بدون فوائد مع %2$s</string>
+    <string name="tw_info_title">قسّم فاتورتك على دفعات مع تمارا</string>
+    <string name="tw_info_sub_title">بدون فوائد ولا رسوم</string>
+
+</resources>

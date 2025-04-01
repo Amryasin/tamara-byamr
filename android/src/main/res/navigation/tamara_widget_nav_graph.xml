@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tamara_widget_nav_graph"
+    app:startDestination="@id/tamaraWidgetFragment">
+    <fragment
+        android:id="@+id/tamaraWidgetFragment"
+        android:name="co.tamara.sdk.ui.TamaraWidgetFragment"
+        android:label="tamara_widget_fragment"
+        tools:layout="@layout/tamara_fragment_widget" >
+        <argument
+            android:name="type"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="properties"
+            app:argType="co.tamara.sdk.model.request.WidgetProperties" />
+    </fragment>
+</navigation>

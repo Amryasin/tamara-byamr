@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_button_normal">#6DC8BF</color>
+    <color name="bg_button_pressed">#2BADA0</color>
+    <color name="tw_color_divider">#f2f2f2</color>
+    <color name="tw_color_highlight">#000000</color>
+    <color name="tw_color_widget_bg">#ffffff</color>
+    <color name="tw_color_border">#E5E5E5</color>
+    <color name="tw_neutral_black">#666666</color>
+</resources>

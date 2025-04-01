@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/tamaraPaymentFragment">
+
+    <fragment
+        android:id="@+id/tamaraPaymentFragment"
+        android:name="co.tamara.sdk.ui.TamaraPaymentFragment"
+        android:label="tamara_payment_fragment"
+        tools:layout="@layout/tamara_fragment_payment" >
+        <argument
+            android:name="order"
+            app:argType="co.tamara.sdk.model.Order" />
+        <action
+            android:id="@+id/action_tamaraPaymentFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+        <argument
+            android:name="payment_status"
+            app:argType="string"
+            android:defaultValue="STATUS_PENDING" />
+    </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="co.tamara.sdk.ui.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/tamara_fragment_web_view" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_webViewFragment_to_tamaraPaymentFragment"
+            app:destination="@id/tamaraPaymentFragment" >
+            <argument
+                android:name="payment_status"
+                android:defaultValue="STATUS_CANCEL" />
+            <argument
+                android:name="order"
+                android:defaultValue="null" />
+        </action>
+    </fragment>
+</navigation>
