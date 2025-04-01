@@ -52,7 +52,8 @@ internal class TamaraInformationActivity : AppCompatActivity() {
                 bundle.putParcelable(TamaraInformationFragment.ARG_PAYMENT_OPTIONS, paymentOptions)
             }
             bundle.putString(TamaraInformationFragment.ARG_TYPE, type.toString())
-            navController.navigate(R.id.action_tamaraInformationFragment_to_tamaraInformationFragment, bundle)
+
+            navController.setGraph(navController.graph,bundle)
         }
     }
     companion object {
@@ -61,8 +62,8 @@ internal class TamaraInformationActivity : AppCompatActivity() {
         private const val EXTRA_REFUNDS = "extra_refunds"
         private const val EXTRA_REFERENCE = "extra_reference"
         private const val EXTRA_CANCEL = "extra_cancel"
-        private const val EXTRA_PAYMENT_OPTIONS = "extra_payment_options"
         private const val EXTRA_AUTHORISE = "extra_authorise"
+        private const val EXTRA_PAYMENT_OPTIONS = "extra_payment_options"
         private const val EXTRA_TYPE = "extra_type"
         fun getOrderDetail(activity: Activity, orderId: String, requestCode: Int){
             var intent = Intent(activity, TamaraInformationActivity::class.java)

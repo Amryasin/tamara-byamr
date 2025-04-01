@@ -4,6 +4,7 @@ import android.app.Activity
 
 interface Tamara {
     fun init(authToken: String, apiUrl: String, notificationWebHook: String, publishKey: String, notificationToken: String, isSanbox: Boolean)
+    fun paymentCheckout(checkOutUrl: String, successCallbackUrl: String, failureCallbackUrl: String, cancelCallbackUrl: String)
     fun getOrderDetail(orderId: String)
     fun getCapturePayment(jsonData: String)
     fun createOrder(orderReferenceId: String, description: String)

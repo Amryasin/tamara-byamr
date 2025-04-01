@@ -1,7 +1,6 @@
 library tamara_checkout;
 
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -48,7 +47,6 @@ class _TamaraCheckoutState extends State<TamaraCheckout> {
     } else {
       _controller = WebViewController();
     }
-
     _controller!
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
