@@ -2,6 +2,7 @@ package co.tamara.sdk.ui
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,12 +23,14 @@ import co.tamara.sdk.model.request.PaymentOptions
 import co.tamara.sdk.model.request.PaymentRefund
 import co.tamara.sdk.model.response.AuthoriseOrder
 import co.tamara.sdk.model.response.CancelOrderResponse
-import co.tamara.sdk.model.response.RefundsResponse
 import co.tamara.sdk.model.response.PaymentOptionsResponse
+import co.tamara.sdk.model.response.RefundsResponse
 import co.tamara.sdk.model.response.orderdetail.OrderDetail
 import co.tamara.sdk.vo.Status
 
 internal class TamaraInformationFragment: Fragment() {
+    private var _binding: TamaraInformationFragmentBinding? = null
+    private val binding get() = _binding!!
     companion object {
         const val ARG_CAPTURE= "capture_payment"
         const val ARG_ORDER_ID= "order_id"
@@ -42,14 +45,13 @@ internal class TamaraInformationFragment: Fragment() {
     private var paymentRefund: PaymentRefund? = null
     private var orderReference: OrderReference? = null
     private var cancelOrder: CancelOrder? = null
-    private lateinit var binding: TamaraInformationFragmentBinding
     private var paymentOptions: PaymentOptions? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = TamaraInformationFragmentBinding.inflate(inflater, container, false)
+        _binding = TamaraInformationFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -241,6 +243,7 @@ internal class TamaraInformationFragment: Fragment() {
                                 Status.SUCCESS -> {
                                     hideLoading()
                                     val intent = InformationResult.successIntent("INFORMATION_RESULT")
+                                    Log.d("PAYMENT_OPTIONS", "PAYMENT_OPTIONS")
                                     val paymentOptions: PaymentOptionsResponse? = it.data
                                     intent.putExtra(Information.PAYMENT_OPTIONS.toString(), paymentOptions)
                                     activity?.setResult(

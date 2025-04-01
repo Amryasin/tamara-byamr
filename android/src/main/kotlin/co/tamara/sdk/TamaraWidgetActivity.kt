@@ -26,7 +26,7 @@ class TamaraWidgetActivity : AppCompatActivity() {
                 bundle.putParcelable(TamaraWidgetFragment.ARG_PROPERTIES, properties)
             }
             bundle.putString(TamaraWidgetFragment.ARG_TYPE, it.getStringExtra(EXTRA_TYPE))
-            navController.setGraph(navController.graph,bundle)
+            navController.navigate(R.id.action_tamaraWidgetFragment_to_tamaraWidgetFragment, bundle)
         }
     }
 
@@ -51,7 +51,7 @@ class TamaraWidgetActivity : AppCompatActivity() {
         }
 
         fun renderWidgetProduct(activity: Activity, language: String, country: String, publicKey: String,
-                                 amount: Double, requestCode: Int){
+                                amount: Double, requestCode: Int){
             var intent = Intent(activity, TamaraWidgetActivity::class.java)
             intent.putExtra(EXTRA_PROPERTIES, WidgetProperties(language, country, publicKey, amount))
             intent.putExtra(EXTRA_TYPE, "PRODUCT")
@@ -59,7 +59,7 @@ class TamaraWidgetActivity : AppCompatActivity() {
         }
 
         fun renderWidgetProduct(fragment: Fragment, language: String, country: String, publicKey: String,
-                                 amount: Double, requestCode: Int){
+                                amount: Double, requestCode: Int){
             var intent = Intent(fragment.activity, TamaraWidgetActivity::class.java)
             intent.putExtra(EXTRA_PROPERTIES, WidgetProperties(language, country, publicKey, amount))
             intent.putExtra(EXTRA_TYPE, "PRODUCT")

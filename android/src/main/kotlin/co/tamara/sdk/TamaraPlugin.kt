@@ -43,13 +43,7 @@ class TamaraPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAwar
                 init(authToken = authToken!!, apiUrl = apiUrl!!, notificationWebHook = notificationWebHook!!,
                     publishKey = publishKey!!, notificationToken = notificationToken!!, isSanbox = isSanbox!!)
             }
-            "startPayment" -> {
-                val checkoutUrl : String? = call.argument("checkoutUrl")
-                val successCallbackUrl : String? = call.argument("successCallbackUrl")
-                val failureCallbackUrl : String? = call.argument("failureCallbackUrl")
-                val cancelCallbackUrl : String? = call.argument("cancelCallbackUrl")
-                paymentCheckout(checkoutUrl!!, successCallbackUrl!!, failureCallbackUrl!!, cancelCallbackUrl!!)
-            }
+
             "orderDetail" -> {
                 _result = result
                 val orderId : String? = call.argument("orderId")
@@ -226,15 +220,6 @@ class TamaraPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAwar
         isSanbox: Boolean
     ) {
         TamaraPayment.initialize(authToken, apiUrl, notificationWebHook, publishKey, notificationToken, isSanbox)
-    }
-
-    override fun paymentCheckout(
-        checkOutUrl: String,
-        successCallbackUrl: String,
-        failureCallbackUrl: String,
-        cancelCallbackUrl: String
-    ) {
-        TamaraPayment.startPayment(activity!!, checkOutUrl, successCallbackUrl, failureCallbackUrl, cancelCallbackUrl)
     }
 
     override fun getOrderDetail(orderId: String) {

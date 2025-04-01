@@ -1,11 +1,11 @@
 library tamara_checkout;
 
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class TamaraCheckout extends StatefulWidget {
   final String checkoutUrl;
@@ -24,34 +24,30 @@ class TamaraCheckout extends StatefulWidget {
   final void Function()? onPaymentSuccess;
   final void Function()? onPaymentFailed;
   final void Function()? onPaymentCanceled;
-
   @override
   _TamaraCheckoutState createState() => _TamaraCheckoutState();
 }
 
 class _TamaraCheckoutState extends State<TamaraCheckout> {
-  late PlatformWebViewControllerCreationParams _params;
+  PlatformWebViewControllerCreationParams? _params;
   WebViewController? _controller;
   WebViewPermissionRequest? requestPermission;
 
   @override
   void initState() {
     super.initState();
-    if (Platform.isIOS) {
-      _params = WebKitWebViewControllerCreationParams(
-          allowsInlineMediaPlayback: true);
+    _params = const PlatformWebViewControllerCreationParams();
+    if (Platform.isAndroid) {
+      _controller = WebViewController.fromPlatformCreationParams(
+        _params!,
+        onPermissionRequest: (WebViewPermissionRequest request) async {
+          requestPermission = request;
+          await requestCameraPermission();
+        },
+      );
     } else {
-      _params = const PlatformWebViewControllerCreationParams();
+      _controller = WebViewController();
     }
-    _controller = WebViewController.fromPlatformCreationParams(
-      _params,
-      onPermissionRequest: Platform.isAndroid
-          ? (WebViewPermissionRequest request) async {
-              requestPermission = request;
-              await requestCameraPermission();
-            }
-          : null,
-    );
 
     _controller!
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -96,7 +92,9 @@ class _TamaraCheckoutState extends State<TamaraCheckout> {
       status = await Permission.camera.request();
       if (status.isGranted) {
         requestPermission?.grant();
-      } else {}
+      } else {
+
+      }
     } else if (status.isGranted) {
       requestPermission?.grant();
     } else if (status.isPermanentlyDenied) {

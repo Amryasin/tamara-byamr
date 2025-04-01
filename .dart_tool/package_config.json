@@ -51,9 +51,9 @@
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///C:/Users/L/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-1.0.4",
+      "rootUri": "file:///C:/Users/L/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-5.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_test",
@@ -93,9 +93,9 @@
     },
     {
       "name": "lints",
-      "rootUri": "file:///C:/Users/L/AppData/Local/Pub/Cache/hosted/pub.dev/lints-1.0.1",
+      "rootUri": "file:///C:/Users/L/AppData/Local/Pub/Cache/hosted/pub.dev/lints-5.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.6"
     },
     {
       "name": "matcher",
@@ -248,13 +248,13 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "tamara_flutter_sdk_plus",
+      "name": "tamara_flutter_sdk",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-04-01T23:16:31.440860Z",
+  "generated": "2025-04-01T23:21:40.733112Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/flutter/2.10.5/flutter",

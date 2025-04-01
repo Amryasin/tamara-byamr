@@ -13,31 +13,28 @@
         <argument
             android:name="order"
             app:argType="co.tamara.sdk.model.Order" />
-        <action
-            android:id="@+id/action_tamaraPaymentFragment_to_webViewFragment"
-            app:destination="@id/webViewFragment" />
         <argument
             android:name="payment_status"
             app:argType="string"
             android:defaultValue="STATUS_PENDING" />
     </fragment>
+
     <fragment
         android:id="@+id/webViewFragment"
         android:name="co.tamara.sdk.ui.WebViewFragment"
-        android:label="fragment_web_view"
-        tools:layout="@layout/tamara_fragment_web_view" >
-        <argument
-            android:name="url"
-            app:argType="string" />
+        android:label="tamara_fragment_web_view"
+        tools:layout="@layout/tamara_fragment_web_view">
         <action
             android:id="@+id/action_webViewFragment_to_tamaraPaymentFragment"
-            app:destination="@id/tamaraPaymentFragment" >
-            <argument
-                android:name="payment_status"
-                android:defaultValue="STATUS_CANCEL" />
-            <argument
-                android:name="order"
-                android:defaultValue="null" />
-        </action>
+            app:destination="@id/tamaraPaymentFragment" />
+        <argument
+            android:name="CHECK_OUT_SESSION"
+            app:argType="co.tamara.sdk.model.response.CheckoutSession"
+            app:nullable="true" />
+        <argument
+            android:name="merchant_url"
+            app:argType="co.tamara.sdk.model.MerchantUrl"
+            app:nullable="true" />
     </fragment>
+
 </navigation>

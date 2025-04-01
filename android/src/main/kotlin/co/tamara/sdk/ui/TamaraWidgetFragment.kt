@@ -10,11 +10,14 @@ import co.tamara.sdk.InformationResult
 import co.tamara.sdk.R
 import co.tamara.sdk.TamaraPayment
 import co.tamara.sdk.const.Information
+import co.tamara.sdk.databinding.TamaraFragmentWidgetBinding
 import co.tamara.sdk.model.request.WidgetProperties
 import co.tamara.sdk.model.response.CartPage
 import co.tamara.sdk.model.response.Product
 
 class TamaraWidgetFragment: Fragment() {
+    private var _binding: TamaraFragmentWidgetBinding? = null
+    private val binding get() = _binding!!
     companion object {
         const val ARG_TYPE = "type"
         const val ARG_PROPERTIES = "properties"
@@ -27,7 +30,8 @@ class TamaraWidgetFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.tamara_fragment_widget, container, false)
+        _binding = TamaraFragmentWidgetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -42,7 +46,7 @@ class TamaraWidgetFragment: Fragment() {
                     CART_PAGE -> {
                         val intent = InformationResult.successIntent("INFORMATION_RESULT")
                         intent.putExtra(Information.CART.toString(), CartPage(script = generateUI(it.language, it.country, it.publicKey, it.amount, "3"),
-                        url = generateURL(it.language, it.country, it.publicKey, it.amount, "3")))
+                            url = generateURL(it.language, it.country, it.publicKey, it.amount, "3")))
                         activity?.setResult(
                             Activity.RESULT_OK, intent)
                         activity?.finish()
@@ -62,6 +66,14 @@ class TamaraWidgetFragment: Fragment() {
                 }
             }
         }
+    }
+
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading(){
+        binding.progressBar.visibility = View.GONE
     }
 
     fun generateUI(language: String, country: String, publicKey: String,
@@ -84,7 +96,7 @@ class TamaraWidgetFragment: Fragment() {
     }
 
     fun generateURL(language: String, country: String, publicKey: String,
-                   amount: Double, inline: String): String {
+                    amount: Double, inline: String): String {
         if (TamaraPayment.getInstance().isSandbox) {
             return "https://cdn-sandbox.tamara.co/widget-v2/tamara-widget.html?lang=$language&public_key=$publicKey&country=$country&amount=$amount&inline_type=$inline"
         }

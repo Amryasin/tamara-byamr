@@ -484,34 +484,8 @@ class TamaraPayment {
          * Start Tamara Payment Activity
          * @param activity Activity which will receive callback data form SDK
          */
-        fun startPayment(activity: Activity, checkOutUrl: String,
-                         successCallbackUrl: String, failureCallbackUrl: String,
-                         cancelCallbackUrl: String){
-            getInstance().state = STATE_INITIALIZED
-            getInstance().successUrl = successCallbackUrl
-            getInstance().failureUrl = failureCallbackUrl
-            getInstance().cancelUrl = cancelCallbackUrl
-            TamaraPaymentActivity.start(activity, checkOutUrl, REQUEST_TAMARA_PAYMENT)
-        }
-
-        /**
-         * Start Tamara Payment Activity
-         * @param activity Activity which will receive callback data form SDK
-         */
         fun startPayment(fragment: Fragment){
             TamaraPaymentActivity.start(fragment, getInstance().buildOrder(), REQUEST_TAMARA_PAYMENT)
-        }
-
-        /**
-         * Start Tamara Payment Activity
-         * @param activity Activity which will receive callback data form SDK
-         */
-        fun startPayment(fragment: Fragment, checkOutUrl: String, successCallbackUrl: String, failureCallbackUrl: String, cancelCallbackUrl: String){
-            getInstance().state = STATE_INITIALIZED
-            getInstance().successUrl = successCallbackUrl
-            getInstance().failureUrl = failureCallbackUrl
-            getInstance().cancelUrl = cancelCallbackUrl
-            TamaraPaymentActivity.start(fragment, checkOutUrl, REQUEST_TAMARA_PAYMENT)
         }
 
         /**

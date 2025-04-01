@@ -3,7 +3,7 @@
 # Run `pod lib lint sample_plugin_flutter.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'tamara_flutter_sdk_plus'
+  s.name             = 'tamara_flutter_sdk'
   s.version          = '1.0.0'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC

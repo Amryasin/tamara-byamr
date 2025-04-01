@@ -1,8 +1,11 @@
 package co.tamara.sdk.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,14 +16,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import co.tamara.sdk.R
 import co.tamara.sdk.const.PaymentStatus
 import co.tamara.sdk.databinding.TamaraFragmentWebViewBinding
 import co.tamara.sdk.model.MerchantUrl
+import co.tamara.sdk.model.response.CheckoutSession
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -32,19 +38,21 @@ import java.util.*
  * create an instance of this fragment.
  */
 internal class WebViewFragment : Fragment() {
-
-    private var url: String? = null
+    private var _binding: TamaraFragmentWebViewBinding? = null
+    private val binding get() = _binding!!
     private var merchantUrl: MerchantUrl? = null
 
-     private var photoPath: String? = null
-     private var valueCallback: ValueCallback<Uri>? = null
-     private var valuesCallback: ValueCallback<Array<Uri>>? = null
-    private lateinit var binding: TamaraFragmentWebViewBinding
+    private var photoPath: String? = null
+    private var valueCallback: ValueCallback<Uri>? = null
+    private var valuesCallback: ValueCallback<Array<Uri>>? = null
+    private var checkoutSession: CheckoutSession? = null
+    private var permissionRequest: PermissionRequest? = null
+    private val REQUEST_CAMERA_PERMISSION = 12345
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            url = it.getString(ARG_URL)
+            checkoutSession = it.getParcelable(ARG_CHECK_OUT_SESSION)
             merchantUrl = it.getParcelable(ARG_MERCHANT_URL)
         }
     }
@@ -52,54 +60,66 @@ internal class WebViewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        binding = TamaraFragmentWebViewBinding.inflate(inflater, container, false)
+        _binding = TamaraFragmentWebViewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
                     // Handle the back button event
-                    val bundle = bundleOf(TamaraPaymentFragment.ARG_PAYMENT_STATUS to PaymentStatus.STATUS_CANCEL.name)
-                    findNavController(this@WebViewFragment).navigate(R.id.tamaraPaymentFragment, bundle)
+                    val bundle =
+                        bundleOf(TamaraPaymentFragment.ARG_PAYMENT_STATUS to PaymentStatus.STATUS_CANCEL.name)
+                    findNavController().navigate(R.id.action_webViewFragment_to_tamaraPaymentFragment, bundle)
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-        val settings: WebSettings = binding.webView.settings
-        settings.javaScriptEnabled = true
-        binding.webView.webViewClient = object: WebViewClient(){
+        binding.webView.setBackgroundColor(Color.parseColor("#ffffff"))
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.settings.loadWithOverviewMode = true
+        binding.webView.settings.useWideViewPort = true
+        binding.webView.settings.domStorageEnabled = true
+        binding.webView.settings.allowFileAccess = true
+        binding.webView.settings.allowContentAccess = true
+        binding.webView.settings.allowUniversalAccessFromFileURLs = true
+        binding.webView.settings.allowFileAccessFromFileURLs = true
+        binding.webView.settings.javaScriptCanOpenWindowsAutomatically = true
+        binding.webView.settings.mediaPlaybackRequiresUserGesture = false
+        binding.webView.webViewClient = object : WebViewClient() {
             override fun onReceivedHttpAuthRequest(
                 view: WebView?,
                 handler: HttpAuthHandler?,
                 host: String?,
                 realm: String?
             ) {
-                handler?.proceed("tamara","tamarapay@2020")
+                handler?.proceed("tamara", "tamarapay@2020")
             }
 
             override fun shouldOverrideUrlLoading(
-                view: WebView,
-                url: String?
+                view: WebView?,
+                request: WebResourceRequest?
             ): Boolean {
-                Log.d("Tamara", "url: $url")
-                merchantUrl?.let {merchantUrl ->
-                    when {
-                        url?.contains(merchantUrl.success) == true -> {
-                            returnSuccess()
-                        }
-                        url?.contains(merchantUrl.cancel) == true -> {
-                            returnCancel()
-                        }
-                        url?.contains(merchantUrl.failure) == true -> {
-                            returnFailure()
-                        }
-                        else -> {
-                            url?.let {
-                                view.loadUrl(url)
+                merchantUrl?.let { merchantUrl ->
+                    request?.url?.let {
+                        when {
+                            it.toString().contains(merchantUrl.success) -> {
+                                returnSuccess()
+                            }
+
+                            it.toString().contains(merchantUrl.cancel) -> {
+                                returnCancel()
+                            }
+
+                            it.toString().contains(merchantUrl.failure) -> {
+                                returnFailure()
+                            }
+                            else -> {
+                                view?.loadUrl(it.toString())
                             }
                         }
                     }
@@ -114,15 +134,7 @@ internal class WebViewFragment : Fragment() {
                 }
             }
         }
-        binding.webView.settings.javaScriptEnabled = true
-        binding.webView.settings.loadWithOverviewMode = true
-        binding.webView.settings.useWideViewPort = true
-        binding.webView.settings.domStorageEnabled = true
-        binding.webView.settings.allowFileAccess=true
-        binding.webView.settings.allowContentAccess=true
-        binding.webView.settings.allowUniversalAccessFromFileURLs=true
-        binding.webView.settings.allowFileAccessFromFileURLs=true
-        binding.webView.settings.javaScriptCanOpenWindowsAutomatically=true
+
         binding.webView.webChromeClient = object : WebChromeClient() {
             override fun onShowFileChooser(
                 webView: WebView,
@@ -164,12 +176,37 @@ internal class WebViewFragment : Fragment() {
                 startActivityForResult(chooserIntent, FCR)
                 return true
             }
+
+            override fun onPermissionRequest(request: PermissionRequest) {
+                permissionRequest = request
+                if (request.resources?.contains("android.permission.CAMERA") == true || request.resources?.contains("android.webkit.resource.VIDEO_CAPTURE") == true) {
+                    if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        // Permission is not granted, so request it
+                        requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+                    } else {
+                        request.grant(request.resources)
+                    }
+                } else {
+                    super.onPermissionRequest(request)
+                }
+            }
         }
 
-        url?.let {
+        checkoutSession?.checkout_url?.let {
             binding.webView.loadUrl(it)
         }
-        binding.progressBar.visibility = View.VISIBLE
+//        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permissionRequest?.grant(permissionRequest?.resources)
+            } else {
+                Toast.makeText(requireActivity(), "Permission is not granted", Toast.LENGTH_SHORT).show()
+                requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+            }
+        }
     }
 
     // Create an image file
@@ -182,6 +219,7 @@ internal class WebViewFragment : Fragment() {
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(imageFileName, ".jpg", storageDir)
     }
+
     fun openFileChooser(uploadMsg: ValueCallback<Uri?>?) {
         this.openFileChooser(uploadMsg, "*/*")
     }
@@ -247,33 +285,44 @@ internal class WebViewFragment : Fragment() {
     }
 
 
-
     private fun returnFailure() {
         activity?.let {
             val bundle = Bundle()
-            bundle.putString(TamaraPaymentFragment.ARG_PAYMENT_STATUS, PaymentStatus.STATUS_ERROR.name)
-            findNavController(this).navigate(R.id.tamaraPaymentFragment, bundle)
+            bundle.putString(
+                TamaraPaymentFragment.ARG_PAYMENT_STATUS,
+                PaymentStatus.STATUS_ERROR.name
+            )
+            bundle.putParcelable(ARG_CHECK_OUT_SESSION, checkoutSession)
+            findNavController().navigate(R.id.action_webViewFragment_to_tamaraPaymentFragment, bundle)
         }
     }
 
     private fun returnSuccess() {
         activity?.let {
             val bundle = Bundle()
-            bundle.putString(TamaraPaymentFragment.ARG_PAYMENT_STATUS, PaymentStatus.STATUS_SUCCESS.name)
-            findNavController(this).navigate(R.id.tamaraPaymentFragment, bundle)
+            bundle.putString(
+                TamaraPaymentFragment.ARG_PAYMENT_STATUS,
+                PaymentStatus.STATUS_SUCCESS.name
+            )
+            bundle.putParcelable(ARG_CHECK_OUT_SESSION, checkoutSession)
+            findNavController().navigate(R.id.action_webViewFragment_to_tamaraPaymentFragment, bundle)
         }
     }
 
     private fun returnCancel() {
         activity?.let {
             val bundle = Bundle()
-            bundle.putString(TamaraPaymentFragment.ARG_PAYMENT_STATUS, PaymentStatus.STATUS_CANCEL.name)
-            findNavController(this).navigate(R.id.tamaraPaymentFragment, bundle)
+            bundle.putString(
+                TamaraPaymentFragment.ARG_PAYMENT_STATUS,
+                PaymentStatus.STATUS_CANCEL.name
+            )
+            bundle.putParcelable(ARG_CHECK_OUT_SESSION, checkoutSession)
+            findNavController().navigate(R.id.action_webViewFragment_to_tamaraPaymentFragment, bundle)
         }
     }
 
     companion object {
-        const val ARG_URL = "url"
+        const val ARG_CHECK_OUT_SESSION = "CHECK_OUT_SESSION"
         const val ARG_MERCHANT_URL = "merchant_url"
         const val FILECHOOSER_RESULTCODE = 101
         const val FCR = 1

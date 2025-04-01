@@ -9,6 +9,9 @@
         android:name="co.tamara.sdk.ui.TamaraWidgetFragment"
         android:label="tamara_widget_fragment"
         tools:layout="@layout/tamara_fragment_widget" >
+        <action
+            android:id="@+id/action_tamaraWidgetFragment_to_tamaraWidgetFragment"
+            app:destination="@id/tamaraWidgetFragment" />
         <argument
             android:name="type"
             app:argType="string"
