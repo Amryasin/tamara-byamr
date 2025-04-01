@@ -16,7 +16,7 @@
 
 package co.tamara.sdk.di
 
-import co.tamara.sdk.BuildConfig
+//import co.tamara.sdk.BuildConfig
 import co.tamara.sdk.TamaraPayment
 import co.tamara.sdk.api.Service
 import co.tamara.sdk.util.LiveDataCallAdapterFactory
@@ -44,11 +44,11 @@ internal class AppModule {
             }
             chain.proceed(requestBuilder.build())
         }
-        if(BuildConfig.DEBUG) {
-            val logging = HttpLoggingInterceptor()
-            logging.level = (HttpLoggingInterceptor.Level.BODY)
-            builder.addInterceptor(logging)
-        }
+        //if(BuildConfig.DEBUG) {
+        //    val logging = HttpLoggingInterceptor()
+        //    logging.level = (HttpLoggingInterceptor.Level.BODY)
+        //    builder.addInterceptor(logging)
+        //}
         var client = builder.build()
         return Retrofit.Builder()
             .client(client)

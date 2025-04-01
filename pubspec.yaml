@@ -1,11 +1,11 @@
 name: tamara_flutter_sdk_plus
 description: Tamara Check out SDK
-version: 1.0.0
+version: 1.0.4
 homepage: https://pub.dev/packages/tamara_flutter_sdk_plus
 
 environment:
-  sdk: ^3.5.3
-  flutter: ">=1.17.0"
+  sdk: '>=3.3.0 <4.0.0'
+  flutter: '>=3.3.0'
 
 dependencies:
   flutter:
