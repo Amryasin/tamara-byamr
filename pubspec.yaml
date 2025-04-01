@@ -11,7 +11,7 @@ dependencies:
   auto_size_text_field: ^2.2.1
   flutter:
     sdk: flutter
-  intl: ^0.18.1
+  intl: ^0.19.1
   fluttertoast: ^8.2.2
   webview_flutter: ^4.2.3
   permission_handler: ^11.4.0
